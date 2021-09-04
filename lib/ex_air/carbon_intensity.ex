@@ -1,5 +1,6 @@
 defmodule ExAir.CarbonIntensity do
   use Ecto.Schema
+  import Ecto.Changeset
 
   @primary_key {:id, :integer, []}
   @required_args [:id, :forecast, :actual, :index, :from, :to]
@@ -12,8 +13,9 @@ defmodule ExAir.CarbonIntensity do
     field :to, :utc_datetime
   end
 
-  def changeset(params) do
-    %ExAir.CarbonIntensity{}
-    |> Ecto.Changeset.cast(params, @required_args)
+  def changeset(model, params) do
+    model
+    |> cast(params, @required_args)
+    |> unique_constraint(:id)
   end
 end

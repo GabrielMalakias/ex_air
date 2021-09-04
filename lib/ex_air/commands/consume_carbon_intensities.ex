@@ -27,10 +27,12 @@ defmodule ExAir.Commands.ConsumeCarbonIntensities do
   end
 
   def insert(record) do
-    result = record
-    |> ExAir.Mappers.CarbonIntensity.from_http_to_model
-    |> ExAir.CarbonIntensity.changeset
-    |> ExAir.Repo.insert
+    params = ExAir.Mappers.CarbonIntensity.from_http_to_model(record)
+
+    params
+    |> ExAir.Queries.CarbonIntensity.find_or_new
+    |> ExAir.CarbonIntensity.changeset(params)
+    |> ExAir.Repo.insert_or_update
   end
 
   def build_datablocks(from, to, acc) do
