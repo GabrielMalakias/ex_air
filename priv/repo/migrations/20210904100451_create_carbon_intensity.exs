@@ -7,6 +7,8 @@ defmodule ExAir.Repo.Migrations.CreateCarbonIntensity do
       add :forecast, :integer
       add :actual, :integer
       add :index, :string
+      add :from, :utc_datetime
+      add :to, :utc_datetime
     end
   end
 end

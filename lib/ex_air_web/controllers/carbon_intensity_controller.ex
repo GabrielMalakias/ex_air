@@ -8,7 +8,7 @@ defmodule ExAirWeb.CarbonIntensityController do
   end
 
   def index(conn, _params) do
-   render_index(conn, ExAir.Queries.CarbonIntensity.all)
+   render_index(ExAir.Queries.CarbonIntensity.all, conn)
   end
 
   defp render_index(records, conn) do

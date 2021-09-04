@@ -27,7 +27,7 @@ defmodule ExAirWeb.Router do
       pipe_through :api
 
       post "/", ExAirWeb.CarbonIntensityController, :create
-      post "/", ExAirWeb.CarbonIntensityController, :index
+      get "/", ExAirWeb.CarbonIntensityController, :index
     end
   end
 end

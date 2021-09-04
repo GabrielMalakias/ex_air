@@ -1,9 +1,10 @@
 defmodule ExAir.Commands.ConsumeCarbonIntensities do
   require Logger
+  alias ExAir.Converter
 
   def call(params) do
-    from = parse_datetime(params["from"])
-    to = parse_datetime(params["to"])
+    from = Converter.from_iso8601!(params["from"])
+    to = Converter.from_iso8601!(params["to"])
 
     from
     |> build_datablocks(to, [])
@@ -21,8 +22,15 @@ defmodule ExAir.Commands.ConsumeCarbonIntensities do
 
   def start_task(from, to) do
     Task.Supervisor.async(ExAir.TaskSupervisor, fn ->
-      ExAir.Clients.CarbonIntensity.get(from, to)
+      Enum.map(ExAir.Clients.CarbonIntensity.get(from, to), &insert/1)
     end)
+  end
+
+  def insert(record) do
+    result = record
+    |> ExAir.Mappers.CarbonIntensity.from_http_to_model
+    |> ExAir.CarbonIntensity.changeset
+    |> ExAir.Repo.insert
   end
 
   def build_datablocks(from, to, acc) do
@@ -38,10 +46,5 @@ defmodule ExAir.Commands.ConsumeCarbonIntensities do
 
   defp increment(time) do
     DateTime.add(time, 1800, :second)
-  end
-
-  defp parse_datetime(text) do
-    {:ok, datetime, _} =  DateTime.from_iso8601(text)
-    datetime
   end
 end
