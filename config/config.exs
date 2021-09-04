@@ -10,6 +10,9 @@ use Mix.Config
 config :ex_air,
   ecto_repos: [ExAir.Repo]
 
+config :ex_air,
+  threads: 10
+
 # Configures the endpoint
 config :ex_air, ExAirWeb.Endpoint,
   url: [host: "localhost"],

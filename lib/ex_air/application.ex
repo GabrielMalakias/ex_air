@@ -14,14 +14,15 @@ defmodule ExAir.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: ExAir.PubSub},
       # Start the Endpoint (http/https)
-      ExAirWeb.Endpoint
-      # Start a worker by calling: ExAir.Worker.start_link(arg)
-      # {ExAir.Worker, arg}
+      ExAirWeb.Endpoint,
+
+      {Task.Supervisor, name: ExAir.TaskSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: ExAir.Supervisor]
+
     Supervisor.start_link(children, opts)
   end
 

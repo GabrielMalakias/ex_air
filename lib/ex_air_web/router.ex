@@ -19,9 +19,15 @@ defmodule ExAirWeb.Router do
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
+    pipeline :api do
+      plug :accepts, ["json"]
+    end
+
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: ExAirWeb.Telemetry
+      pipe_through :api
+
+      post "/", ExAirWeb.CarbonIntensityController, :create
+      post "/", ExAirWeb.CarbonIntensityController, :index
     end
   end
 end
