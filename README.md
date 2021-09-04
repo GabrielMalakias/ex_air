@@ -22,7 +22,6 @@ GET localhost:4000
 ex:.
 curl -H "Accept: application/json" http://localhost:4000
 
-
 Response: 200
 Body:
 

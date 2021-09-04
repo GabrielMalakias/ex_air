@@ -2,6 +2,8 @@ defmodule ExAir.Commands.ConsumeCarbonIntensities do
   require Logger
   alias ExAir.Converter
 
+  @timeblock 1800
+
   def call(params) do
     from = Converter.from_iso8601!(params["from"])
     to = Converter.from_iso8601!(params["to"])
@@ -47,6 +49,6 @@ defmodule ExAir.Commands.ConsumeCarbonIntensities do
   end
 
   defp increment(time) do
-    DateTime.add(time, 1800, :second)
+    DateTime.add(time, @timeblock, :second)
   end
 end
