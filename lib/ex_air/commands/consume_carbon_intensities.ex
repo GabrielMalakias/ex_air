@@ -1,5 +1,4 @@
 defmodule ExAir.Commands.ConsumeCarbonIntensities do
-  require Logger
   alias ExAir.Converter
 
   @timeblock 1800
@@ -15,12 +14,12 @@ defmodule ExAir.Commands.ConsumeCarbonIntensities do
   end
 
   def execute(datablocks) do
-    Enum.map_reduce(datablocks, 0, fn datetime, acc -> {
-      start_task(Enum.at(datablocks, acc), Enum.at(datablocks, acc + 1)), acc + 1
+    Enum.map_reduce(datablocks, 0, fn from, acc -> {
+      start_task(from, Enum.at(datablocks, acc + 1)), acc + 1
     } end)
   end
 
-  def start_task(from, to) when is_nil(to), do: :nothing
+  def start_task(_from, to) when is_nil(to), do: :nothing
 
   def start_task(from, to) do
     Task.Supervisor.async(ExAir.TaskSupervisor, fn ->
