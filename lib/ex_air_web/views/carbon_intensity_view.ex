@@ -6,6 +6,6 @@ defmodule ExAirWeb.CarbonIntensityView do
   end
 
   def render("carbon_intensity.json", %{carbon_intensity: record}) do
-    %{id: record.id, forecast: record.forecast, actual: record.actual, index: record.index}
+    %{id: record.id, forecast: record.forecast, actual: record.actual, index: record.index, from: record.from, to: record.to}
   end
 end

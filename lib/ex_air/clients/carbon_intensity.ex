@@ -3,8 +3,7 @@ defmodule ExAir.Clients.CarbonIntensity do
   @base_path "https://api.carbonintensity.org.uk/intensity"
 
   def get(from, to) do
-    url = build_url(from, to)
-    case HTTPoison.get(build_url(from, to), headers) do
+    case HTTPoison.get(build_url(from, to), headers()) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         %{"data"=> records} = Jason.decode!(body)
         records

@@ -10,5 +10,6 @@ defmodule ExAir.Repo.Migrations.CreateCarbonIntensity do
       add :from, :utc_datetime
       add :to, :utc_datetime
     end
+    create unique_index(:carbon_intensities, [:id])
   end
 end
